@@ -13,9 +13,6 @@ public class Main {
             try (Tensor t = Tensor.create(value.getBytes("UTF-8"))) {
                 // The Java API doesn't yet include convenience functions for adding operations.
                 g.opBuilder("Const", "MyConst").setAttr("dtype", t.dataType()).setAttr("value", t).build();
-                System.out.println("First try succesfully finished");
-                System.out.println(t);
-                System.out.println(g);
             }
 
             // Execute the "MyConst" operation in a Session.
