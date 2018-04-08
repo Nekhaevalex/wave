@@ -9,22 +9,18 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
+import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 import java.io.File;
 
 public class VTUManager {
-    public Document document;
-
+    public Node root;
     public void getVTU(File file) {
         try {
             DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document document = documentBuilder.parse(file);
-            Node root = document.getDocumentElement();
+            root = document.getDocumentElement();
         } catch (ParserConfigurationException ex) {
             ex.printStackTrace(System.out);
         } catch (IOException ex) {
@@ -32,5 +28,23 @@ public class VTUManager {
         } catch (SAXException ex) {
             ex.printStackTrace(System.out);
         }
+    }
+
+    public String printXML() {
+        StringBuilder str = null;
+        NodeList text = root.getChildNodes();
+        for (int i = 0; i < text.getLength(); i++) {
+            Node infoString = text.item(i);
+            str.append(infoString.getNodeName()).append(":").append(infoString.getChildNodes().item(0).getTextContent());
+        }
+        return str.toString();
+    }
+
+    VTUManager(File file) {
+        getVTU(file);
+    }
+
+    VTUManager() {
+
     }
 }
