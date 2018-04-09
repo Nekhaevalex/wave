@@ -226,6 +226,7 @@ public class MainScreen {
                     int blueH = clrH & 0x000000ff;
                     if ((abs(blue - blueH) + abs(red - redH)) / 2 <= 20) {
                         heights[i] = j;
+                        System.out.println(j);
                         break;
                     }
                 }
