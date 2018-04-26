@@ -31,12 +31,10 @@ public class MainScreen {
 
     private AnimationPlayer player;
     private ChannelAnalyzer analyzer;
-    private RunnerViewController progress;
 
     private MainScreen() {
         analyzer = new ChannelAnalyzer(histogram);
         player = new AnimationPlayer(image, slider1, analyzer);
-        progress = new RunnerViewController(slider1);
 
         button1.addActionListener(new ActionListener() {
             @Override
@@ -90,8 +88,7 @@ public class MainScreen {
         comboBox3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int scale = comboBox3.getSelectedIndex();
-                analyzer.scale = scale;
+                analyzer.scale = comboBox3.getSelectedIndex();
             }
         });
         comboBox2.addActionListener(new ActionListener() {
@@ -111,9 +108,7 @@ public class MainScreen {
             public void actionPerformed(ActionEvent e) {
                 try {
                     player.playAnimation();
-                } catch (InterruptedException e1) {
-                    e1.printStackTrace();
-                } catch (IOException e1) {
+                } catch (InterruptedException | IOException e1) {
                     e1.printStackTrace();
                 }
                 slider1.setValue(0);
