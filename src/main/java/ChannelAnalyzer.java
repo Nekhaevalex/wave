@@ -1,18 +1,29 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
-import static java.lang.Math.abs;
-import static java.lang.Math.log;
+import static java.lang.Math.*;
 
 class ChannelAnalyzer {
     private JPanel histogram;
     int scale = 0;
     int mode = 0;
     int filter = 0;
+
+    private double rgbToHeight(int r, int g, int b) {
+//        double result = (asin(1-y/125)+PI*(5/6))/5;
+//        System.out.println(r+" -> "+y+" : "+result);
+        double result = 0;
+        if ((double) b > 255 / 4) {
+            result = 1 / 6 - asin(1 - (2 * (double) b) / 255) / PI;
+        }
+        if (((double) b - (double) r > 63.75)) {
+            result = asin(1 - (2 * (double) b) / 255) / PI + 7 / 6;
+        }
+//        System.out.println(r+" -> "+r+" : "+result);
+        return result;
+    }
 
     void makeHistogram(BufferedImage img) throws IOException {
         Graphics2D hist = (Graphics2D) histogram.getGraphics();
@@ -77,32 +88,25 @@ class ChannelAnalyzer {
                 }
             }
         } else {
-            BufferedImage heightsOrigin = ImageIO.read(new File("/Users/alex/IdeaProjects/wave/src/main/resources/Snap.png"));
             BasicStroke heightBrush = new BasicStroke(1);
-            int[] heights = new int[img.getHeight()];
+            double[] heights = new double[img.getHeight()];
             for (int i = 0; i < img.getHeight(); i++) {
                 int clr = img.getRGB(img.getWidth() / 2, i);
                 int red = (clr & 0x00ff0000) >> 16;
+                int green = (clr & 0x0000ff00) >> 8;
                 int blue = clr & 0x000000ff;
 
-                for (int j = 0; j < heightsOrigin.getHeight(); j++) {
-                    int clrH = heightsOrigin.getRGB(1, j);
-                    int redH = (clrH & 0x00ff0000) >> 16;
-                    int blueH = clrH & 0x000000ff;
-                    if ((abs(blue - blueH) + abs(red - redH)) / 2 <= 20) {
-                        heights[i] = j;
-                        System.out.println(j);
-                        break;
-                    }
-                }
+                heights[i] = rgbToHeight(red, green, blue);
+
+
             }
             hist.setColor(Color.white);
             hist.setStroke(heightBrush);
             for (int i = 1; i < img.getHeight(); i++) {
-                int x1 = (i - 1) * histogram.getWidth() / img.getHeight();
-                int y1 = histogram.getHeight() - heights[i - 1] * histogram.getHeight() / img.getHeight();
-                int x2 = i * histogram.getWidth() / img.getHeight();
-                int y2 = histogram.getHeight() - heights[i] * histogram.getHeight() / img.getHeight();
+                int x1 = ((i - 1) * histogram.getWidth()) / heights.length;
+                int y1 = (int) (heights[i - 1] * histogram.getHeight());
+                int x2 = (i * histogram.getWidth()) / heights.length;
+                int y2 = (int) (heights[i] * histogram.getHeight());
                 hist.drawLine(x1, y1, x2, y2);
             }
         }

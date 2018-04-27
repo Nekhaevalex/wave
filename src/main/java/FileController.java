@@ -1,10 +1,10 @@
 import javax.swing.*;
 import java.io.File;
 
-public class FileController {
-    public static File file = null;
+class FileController {
+    private static File file = null;
 
-    public static File getPlaylist() {
+    static File getPlaylist() {
         JFileChooser fileChooser = new JFileChooser();
         int ret = fileChooser.showDialog(null, "Open...");
         if (ret == JFileChooser.APPROVE_OPTION) {

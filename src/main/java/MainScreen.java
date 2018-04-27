@@ -21,6 +21,7 @@ public class MainScreen {
     private JComboBox comboBox3;
     private JSlider slider1;
     private JButton playButton;
+    private JTextField scaleTextField;
 
     private static JMenuItem openItem;
 
@@ -118,6 +119,12 @@ public class MainScreen {
             @Override
             public void stateChanged(ChangeEvent e) {
                 player.setFrame(slider1.getValue());
+            }
+        });
+        scaleTextField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                player.scale = Double.parseDouble(scaleTextField.getText());
             }
         });
     }

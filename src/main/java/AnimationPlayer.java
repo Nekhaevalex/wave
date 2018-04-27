@@ -16,6 +16,7 @@ class AnimationPlayer {
     private int currentFrame = 0;
     private JSlider slider;
     private ChannelAnalyzer analyzer;
+    public double scale = 0.5;
 
     void loadPlaylist(File playlist) throws FileNotFoundException {
         Scanner sc = new Scanner(playlist);
@@ -41,7 +42,7 @@ class AnimationPlayer {
 
     void redrawImage(int frameNumber) {
         BufferedImage frame = tape.get(frameNumber);
-        canvas.drawImage(frame, screen.getWidth() - frame.getWidth() / 2, screen.getHeight() - frame.getHeight() / 2, null);
+        canvas.drawImage(frame, (screen.getWidth() - (int) Math.round(frame.getWidth() * scale)), (screen.getHeight() - (int) Math.round(frame.getHeight() * scale)), null);
     }
 
     BufferedImage sendFrame() {
@@ -54,7 +55,7 @@ class AnimationPlayer {
 
     void playAnimation() throws InterruptedException, IOException {
         canvas = (Graphics2D) screen.getGraphics();
-        canvas.scale(0.5, 0.5);
+        canvas.scale(scale, scale);
         for (; currentFrame < tape.size(); currentFrame++) {
             redrawImage(currentFrame);
             if (analyzer != null) {
