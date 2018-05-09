@@ -14,7 +14,7 @@ public class MainScreen {
     private JPanel panel1;
     private JPanel image;
     private JPanel histogram;
-    private JPanel adapted;
+    private JPanel filtered;
     private JPanel simplified;
     private JComboBox comboBox1;
     private JComboBox comboBox2;
@@ -32,10 +32,12 @@ public class MainScreen {
 
     private AnimationPlayer player;
     private ChannelAnalyzer analyzer;
+    private Recognizer recognizer;
 
     private MainScreen() {
         analyzer = new ChannelAnalyzer(histogram);
-        player = new AnimationPlayer(image, slider1, analyzer);
+        recognizer = new Recognizer(filtered);
+        player = new AnimationPlayer(image, slider1, analyzer, recognizer);
 
         button1.addActionListener(new ActionListener() {
             @Override

@@ -112,7 +112,27 @@ class ChannelAnalyzer {
         }
     }
 
+    public int[][] getHeightMap(BufferedImage img) {
+        int[][] heighMap = new int[img.getWidth()][img.getHeight()];
+        for (int x = 0; x < img.getWidth(); x++) {
+            for (int y = 0; y < img.getHeight(); y++) {
+                int clr = img.getRGB(x, y);
+                int red = (clr & 0x00ff0000) >> 16;
+                int green = (clr & 0x0000ff00) >> 8;
+                int blue = clr & 0x000000ff;
+
+                heighMap[x][y] = (int) (rgbToHeight(red, green, blue) * 10);
+            }
+        }
+        return heighMap;
+    }
+
+
     ChannelAnalyzer(JPanel histogramScreen) {
         this.histogram = histogramScreen;
+    }
+
+    ChannelAnalyzer() {
+
     }
 }

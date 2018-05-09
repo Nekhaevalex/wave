@@ -16,6 +16,7 @@ class AnimationPlayer {
     private int currentFrame = 0;
     private JSlider slider;
     private ChannelAnalyzer analyzer;
+    private Recognizer recognizer;
     public double scale = 0.5;
 
     void loadPlaylist(File playlist) throws FileNotFoundException {
@@ -61,16 +62,22 @@ class AnimationPlayer {
             if (analyzer != null) {
                 analyzer.makeHistogram(sendFrame());
             }
-            int framerate = 25;
+            if (recognizer != null) {
+                recognizer.setWave(sendFrame());
+                recognizer.filter();
+                recognizer.redraw();
+            }
+            int framerate = 5;
             Thread.sleep(1000 / framerate);
             slider.setValue(currentFrame);
         }
         currentFrame = 0;
     }
 
-    AnimationPlayer(JPanel screen, JSlider slider, ChannelAnalyzer analyzer) {
+    AnimationPlayer(JPanel screen, JSlider slider, ChannelAnalyzer analyzer, Recognizer recognizer) {
         this.screen = screen;
         this.slider = slider;
         this.analyzer = analyzer;
+        this.recognizer = recognizer;
     }
 }
