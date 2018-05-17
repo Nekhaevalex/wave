@@ -1,24 +1,12 @@
-public class Matrix {
+class Matrix {
     private double[][] value;
 
-    public void set(int i, int j, double value) {
+    private void set(int i, int j, double value) {
         this.value[i][j] = value;
     }
 
-    public double get(int i, int j) {
+    private double get(int i, int j) {
         return value[i][j];
-    }
-
-    public void add(Matrix m) throws Error {
-        if (this.getWidth() == m.getWidth() && this.getHeight() == m.getHeight()) {
-            for (int i = 0; i < this.getWidth(); i++) {
-                for (int j = 0; j < this.getHeight(); j++) {
-                    this.value[i][j] += m.value[i][j];
-                }
-            }
-        } else {
-            throw new Error();
-        }
     }
 
     //    public void multiply (Matrix m) throws Error {
@@ -30,11 +18,11 @@ public class Matrix {
 //            throw new Error();
 //        }
 //    }
-    public void addToCell(int x, int y, double value) {
+    void addToCell(int x, int y, double value) {
         this.value[x][y] += value;
     }
 
-    public double determinant() throws Error {
+    double determinant() throws Error {
         if (this.getHeight() != this.getWidth()) {
             throw new Error();
         }
@@ -64,7 +52,7 @@ public class Matrix {
         return result;
     }
 
-    public void insert(int x, Matrix toInsert) {
+    void insert(int x, Matrix toInsert) {
         for (int i = 0; i < toInsert.getHeight(); i++) {
             this.set(x, i, toInsert.get(0, i));
         }
@@ -78,7 +66,7 @@ public class Matrix {
         return this.value[0].length;
     }
 
-    public void copy(Matrix toCopy) {
+    private void copy(Matrix toCopy) {
         for (int i = 0; i < toCopy.getWidth(); i++) {
             for (int j = 0; j < toCopy.getHeight(); j++) {
                 this.set(i, j, toCopy.get(i, j));

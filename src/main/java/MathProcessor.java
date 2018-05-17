@@ -1,16 +1,14 @@
 import java.awt.image.BufferedImage;
 
-public class MathProcessor {
+class MathProcessor {
 
     static double[] approximate(BufferedImage img, int extent) {
         Matrix a = new Matrix(extent);
         Matrix b = new Matrix(1, extent);
         double[] result = new double[extent];
-        int c = 0;
         for (int i = 0; i < img.getWidth(); i++) {
             for (int j = 0; j < img.getHeight(); j++) {
-                if ((img.getRGB(i, j) & 0x000000ff) == 0) {
-                    c++;
+                if ((img.getRGB(i, j) & 0x000000ff) < 255) {
                     for (int x = 0; x < extent; x++) {
                         for (int y = 0; y < extent; y++) {
                             a.addToCell(x, y, Math.pow(i, x + y));

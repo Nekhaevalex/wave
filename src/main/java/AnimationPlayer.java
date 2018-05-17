@@ -17,7 +17,7 @@ class AnimationPlayer {
     private JSlider slider;
     private ChannelAnalyzer analyzer;
     private Recognizer recognizer;
-    public double scale = 0.5;
+    double scale = 0.5;
 
     void loadPlaylist(File playlist) throws FileNotFoundException {
         Scanner sc = new Scanner(playlist);
@@ -54,7 +54,7 @@ class AnimationPlayer {
         currentFrame = frameNumber;
     }
 
-    void playAnimation() throws InterruptedException, IOException {
+    void playAnimation() throws InterruptedException {
         canvas = (Graphics2D) screen.getGraphics();
         canvas.scale(scale, scale);
         for (; currentFrame < tape.size(); currentFrame++) {

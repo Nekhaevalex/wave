@@ -44,11 +44,7 @@ public class MainScreen {
             public void actionPerformed(ActionEvent e) {
                 player.redrawImage(0);
                 player.histogramPanel = histogram;
-                try {
-                    analyzer.makeHistogram(player.sendFrame());
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
+                analyzer.makeHistogram(player.sendFrame());
             }
         });
         openItem.addActionListener(new ActionListener() {
@@ -111,7 +107,7 @@ public class MainScreen {
             public void actionPerformed(ActionEvent e) {
                 try {
                     player.playAnimation();
-                } catch (InterruptedException | IOException e1) {
+                } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }
                 slider1.setValue(0);

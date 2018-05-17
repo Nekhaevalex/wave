@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 import static java.lang.Math.*;
 
@@ -25,7 +24,7 @@ class ChannelAnalyzer {
         return result;
     }
 
-    void makeHistogram(BufferedImage img) throws IOException {
+    void makeHistogram(BufferedImage img) {
         Graphics2D hist = (Graphics2D) histogram.getGraphics();
         hist.fillRect(0, 0, histogram.getWidth(), histogram.getHeight());
         int[][] rgb = new int[3][256];
@@ -112,7 +111,7 @@ class ChannelAnalyzer {
         }
     }
 
-    public int[][] getHeightMap(BufferedImage img) {
+    int[][] getHeightMap(BufferedImage img) {
         int[][] heighMap = new int[img.getWidth()][img.getHeight()];
         for (int x = 0; x < img.getWidth(); x++) {
             for (int y = 0; y < img.getHeight(); y++) {
